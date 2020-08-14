@@ -13,5 +13,5 @@ if __name__ == '__main__':
     if flag == 1:
         print("Java already configured in the system")
         print("The path is:" +  path)
-
-
+    else:
+        print("Java not found in the system")
