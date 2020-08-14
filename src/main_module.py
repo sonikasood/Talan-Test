@@ -25,4 +25,4 @@ if __name__ == '__main__':
         if path != 'Java not found':
             print('java exist -version ' + path)
         else:                                         #java not found install java
-            print("install java")
+            print("Java not installed, Installing Java...")
