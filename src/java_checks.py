@@ -8,7 +8,13 @@ def check_system_os():
     return os_type
 
 
-def check_environ_java():
+def win_check_environ_java():
+    """
+    Function to check java installation in Windows OS
+    :return:
+    flag (int): 0 if no Java, 1 if Java
+    found_path (str): returns the Java Path
+    """
     flag = 0
     found_path = ""
     for item in os.environ['PATH'].split(';'):
