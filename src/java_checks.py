@@ -1,5 +1,11 @@
 import os
+import platform
 import subprocess
+
+
+def check_system_os():
+    os_type = str(platform.system())
+    return os_type
 
 
 def check_environ_java():

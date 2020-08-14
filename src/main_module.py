@@ -7,6 +7,8 @@ import time
 import json
 
 if __name__ == '__main__':
+    print("Checking system os type...")
+    print("Found OS: " + java_checks.check_system_os())
     print("check if java installed")
     # print(os.environ.items())  # 1. step 1 to check environment variables of system if key has value JAVA
     flag, path = java_checks.check_environ_java()
