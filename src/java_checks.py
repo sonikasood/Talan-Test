@@ -2,8 +2,6 @@ import os
 import platform
 import subprocess
 
-from sqlalchemy import null
-
 
 def check_system_os():
     os_type = str(platform.system())
