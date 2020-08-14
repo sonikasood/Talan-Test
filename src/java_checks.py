@@ -33,7 +33,7 @@ def win_check_environ_java():
 def darwin_check_environ_java():  # check for MAC
     print("1. checking if jre present")
     cmd_out = subprocess.run(['java', '-version'], capture_output=True).stderr.decode('utf-8')
-    if 'no' or 'not' in cmd_out:  # if java runtime not present
+    if 'java version' not in cmd_out:  # if java runtime not present
         found_path = 'Java not found'
     else:
         found_path = cmd_out.splitlines()[0].split()[2].strip('""')
