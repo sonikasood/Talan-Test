@@ -17,7 +17,8 @@ if __name__ == '__main__':
         if flag == 1:
             print("Java already configured in the system")
             print("The path is: " + path)
-            print("java version")
+            version = java_checks.win_java_version()  # getting java version for windows system
+            print("Java version: " + version)
         else:
             print("Java not found in the system")
 
