@@ -1,7 +1,7 @@
 import os
 import platform
 import subprocess
-
+import urllib.request
 
 def check_system_os():
     os_type = str(platform.system())
@@ -27,16 +27,6 @@ def win_check_environ_java():
 
     return flag, found_path
 
-
-def win_java_version():
-    cmd_out = subprocess.run(['java', '-version'], capture_output=True).stderr.decode('utf-8')
-    if 'java version' not in cmd_out:  # if java runtime not present
-        java_version = 'Java not found'
-    else:
-        java_version = cmd_out.splitlines()[0].split()[2].strip('""')
-    return java_version
-
-
 # java -version // this will check your jre version
 # javac -version // this will check your java compiler version if you installed
 def darwin_check_environ_java():  # check for MAC
@@ -47,3 +37,19 @@ def darwin_check_environ_java():  # check for MAC
     else:
         found_path = cmd_out.splitlines()[0].split()[2].strip('""')
     return found_path
+
+def check_java_linux():  # check for Linux
+    try:
+       print("checking java installed in linux")
+       cmd_out = subprocess.check_output(['java', '-version'], shell=True)
+       flag = 0
+    except subprocess.CalledProcessError as grepexc:
+        print("error code", grepexc.returncode)
+        flag = 1
+        return flag
+
+
+def java_version():
+    cmd_out = subprocess.run(['java', '-version'], capture_output=True).stderr.decode('utf-8')
+    java_version = cmd_out.splitlines()[0].split()[2].strip('""')
+    return java_version

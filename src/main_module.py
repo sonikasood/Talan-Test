@@ -17,7 +17,7 @@ if __name__ == '__main__':
         if flag == 1:
             print("Java already configured in the system")
             print("The path is: " + path)
-            version = java_checks.win_java_version()  # getting java version for windows system
+            version = java_checks.java_version()  # getting java version for windows system
             print("Java version: " + version)
         else:
             print("Java not found in the system")
@@ -28,5 +28,20 @@ if __name__ == '__main__':
             print('java exist -version ' + path)
         else:                                         #java not found install java
             print("Java not installed, Installing Java...")
+
+    elif OS == 'Linux':  # check Java installed on Mac OS
+        flag = java_checks.check_java_linux()
+        if flag == 0:
+            print("Java not installed ")
+        elif flag == 1:
+            print("Java already configured in the system")
+            version = java_checks.java_version()  # getting java version for windows system
+            print("Java version: " + version)
+
+
+
+
+
+
 
 
