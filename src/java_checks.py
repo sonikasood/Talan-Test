@@ -1,8 +1,6 @@
 import os
 import platform
 import subprocess
-import urllib.request
-import smtplib
 import smtplib, ssl
 
 def check_system_os():
@@ -74,13 +72,13 @@ def install_Java():
 def send_email():
     port = 465  # For SSL
     smtp_server = "smtp.gmail.com"
-    sender_email = "my@gmail.com"  # Enter your address
-    receiver_email = "your@gmail.com"  # Enter receiver address
+    sender_email = "javainstallation@gmail.com"  # Enter your address
+    receiver_email = "sonikasood94@gmail.com"  # Enter receiver address
     password = input("Type your password and press enter: ")
     message = """\
-        Subject: Hi there
+    Subject: This a email notification for Java installation 
 
-        Java installed silently on the system"""
+    Java installation completed."""
 
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
