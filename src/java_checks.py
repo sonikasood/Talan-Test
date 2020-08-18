@@ -69,6 +69,25 @@ def install_Java():
     except subprocess.CallProcessError as grepexc:
         print("error code", grepexc.returncode)
 
+
+def update_Java(version):
+    try:
+        print("update java")
+        if version == 8:
+            package_name = "openjdk-8-jre"
+        elif version == 7:
+            package_name = "openjdk-7-jre"
+        elif version == 6:
+            package_name = "openjdk-6-jre"
+        cmd_out = subprocess.run(['sudo', 'apt', 'install', "-y", package_name], check=True)
+        print(cmd_out.stdout)
+    except subprocess.CallProcessError as grepexc:
+        print("error code", grepexc.returncode)
+
+def extract_number(version):
+    major, minor, _ = version.split('.')
+    return int(minor)
+
 def send_email():
     port = 465  # For SSL
     smtp_server = "smtp.gmail.com"
