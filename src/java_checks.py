@@ -4,6 +4,11 @@ import subprocess
 import smtplib, ssl
 
 def check_system_os():
+    """
+     Function to check Operating system
+     :return:
+     os_type: String
+     """
     os_type = str(platform.system())
     return os_type
 
@@ -27,9 +32,12 @@ def win_check_environ_java():
 
     return flag, found_path
 
-# java -version // this will check your jre version
-# javac -version // this will check your java compiler version if you installed
-def darwin_check_environ_java():  # check for MAC
+def darwin_check_environ_java():
+    """
+        Function to check java installation in Mac Os
+        :return:
+        found_path (str): returns the Java version if found
+        """
     print("1. checking if jre present")
     cmd_out = subprocess.run(['java', '-version'], capture_output=True).stderr.decode('utf-8')
     if 'java version' not in cmd_out:  # if java runtime not present
@@ -38,7 +46,13 @@ def darwin_check_environ_java():  # check for MAC
         found_path = cmd_out.splitlines()[0].split()[2].strip('""')
     return found_path
 
-def check_java_linux():  # check for Linux
+def check_java_linux():
+    """
+        Function to check java installation in Linux environment
+        :return:
+        flag (int): 0 Java installed, 1 Java not installed
+
+        """
     flag = 1
     print("checking java installed in linux")
     try:
@@ -55,12 +69,21 @@ def check_java_linux():  # check for Linux
 
 
 def java_version():
+    """
+        Function to check java version if aleady installed
+        :return:
+        java_version = Returns java version
+        """
     cmd_out = subprocess.run(['java', '-version'], capture_output=True).stderr.decode('utf-8')
     java_version = cmd_out.splitlines()[0].split()[2].strip('""')
     print(java_version)
     return java_version
 
 def install_Java():
+    """
+        Function to install java version 8 openJDK
+
+        """
     try:
       print("install_openJDK java")
       package_name = "openjdk-8-jre"
@@ -69,7 +92,40 @@ def install_Java():
     except subprocess.CallProcessError as grepexc:
         print("error code", grepexc.returncode)
 
+
+def update_Java(version):
+    """
+        Function to update java installation to the version of user
+
+        """
+    try:
+        print("update java")
+        if version == 8:
+            package_name = "openjdk-8-jre"
+        elif version == 7:
+            package_name = "openjdk-7-jre"
+        elif version == 6:
+            package_name = "openjdk-6-jre"
+        cmd_out = subprocess.run(['sudo', 'apt', 'install', "-y", package_name], check=True)
+        print(cmd_out.stdout)
+    except subprocess.CallProcessError as grepexc:
+        print("error code", grepexc.returncode)
+
+def extract_number(version):
+    """
+        Function to extrcat the java version number from string
+        :return:
+        minor (int): Version number
+
+        """
+    major, minor, _ = version.split('.')
+    return int(minor)
+
 def send_email():
+    """
+        Function to send email after installation from google smtp server account
+
+        """
     port = 465  # For SSL
     smtp_server = "smtp.gmail.com"
     sender_email = "javainstallation@gmail.com"  # Enter your address
