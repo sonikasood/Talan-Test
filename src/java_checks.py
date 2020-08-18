@@ -2,6 +2,8 @@ import os
 import platform
 import subprocess
 import urllib.request
+import smtplib
+import smtplib, ssl
 
 def check_system_os():
     os_type = str(platform.system())
@@ -52,4 +54,30 @@ def check_java_linux():  # check for Linux
 def java_version():
     cmd_out = subprocess.run(['java', '-version'], capture_output=True).stderr.decode('utf-8')
     java_version = cmd_out.splitlines()[0].split()[2].strip('""')
+    print(java_version)
     return java_version
+
+def install_Java():
+    try:
+      print("install_openJDK java")
+      package_name = "openjdk-8-jre"
+      cmd_out = subprocess.run(['sudo','apt','install', "-y",package_name], check=True)
+      print(cmd_out.stdout)
+    except subprocess.CallProcessError as grepexc:
+        print("error code", grepexc.returncode)
+
+def send_email():
+    port = 465  # For SSL
+    smtp_server = "smtp.gmail.com"
+    sender_email = "my@gmail.com"  # Enter your address
+    receiver_email = "your@gmail.com"  # Enter receiver address
+    password = input("Type your password and press enter: ")
+    message = """\
+        Subject: Hi there
+
+        Java installed silently on the system"""
+
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, message)
