@@ -1,3 +1,5 @@
+import sys
+sys.path.append('../src')
 from src import java_checks
 import subprocess
 import os
@@ -34,16 +36,17 @@ if __name__ == '__main__':
 
     elif OS == 'Linux':  # check Java installed on Mac OS
         flag = java_checks.check_java_linux()
-        if flag == 0:
+        print("Flag- ", flag)
+        if flag == 1:
             print("Java not installed ")
             java_checks.install_Java()
             print("java installed on This system")
-        elif flag == 1:
+        elif flag == 0:
             print("Java already configured in the system")
             version = java_checks.java_version()  # getting java version for windows system
             print("Java version: " + version)
 
-    # java_checks.send_email()
+# java_checks.send_email()
 
 
 

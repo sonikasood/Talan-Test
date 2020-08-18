@@ -41,14 +41,19 @@ def darwin_check_environ_java():  # check for MAC
     return found_path
 
 def check_java_linux():  # check for Linux
+    flag = 1
+    print("checking java installed in linux")
     try:
-       print("checking java installed in linux")
-       cmd_out = subprocess.check_output(['java', '-version'], shell=True)
-       flag = 0
-    except subprocess.CalledProcessError as grepexc:
-        print("error code", grepexc.returncode)
-        flag = 1
+        subprocess.run(['java', '-version'],check = True)
+        flag = 0
+    except subprocess.CalledProcessError:
+        print("inside exception")
+        print("Java  not installed in the system")
+
+    finally:
+        print("inside finally")
         return flag
+
 
 
 def java_version():
