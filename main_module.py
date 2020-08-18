@@ -7,9 +7,6 @@ import time
 import json
 
 if __name__ == '__main__':
-
-
-
     print("Checking system os type...")
     OS = check_system_os()
     print("Checking if java installed...")
@@ -39,6 +36,7 @@ if __name__ == '__main__':
             print("Java not installed ")
             install_Java()
             print("java installed on This system")
+            send_email()
         elif flag == 0:
             print("Java already configured in the system")
             version = java_version()  # getting java version for windows system
