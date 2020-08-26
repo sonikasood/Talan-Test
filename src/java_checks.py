@@ -105,6 +105,9 @@ def install_Java():
       print(cmd_out.stdout)
     except subprocess.CallProcessError as grepexc:
         print("error code", grepexc.returncode)
+    finally:
+        cmd_out.returncode
+
 
 def win_install_Java():
     """
@@ -157,7 +160,7 @@ def extract_number(version):
     major, minor, _ = version.split('.')
     return int(minor)
 
-def send_email():
+def send_email(msg):
     """
         Function to send email after installation from google smtp server account
 
@@ -168,9 +171,9 @@ def send_email():
     receiver_email = "sonikasood94@gmail.com"  # Enter receiver address
     password = input("Type your password and press enter: ")
     message = """\
-    Subject: This a email notification for Java installation 
+    Subject: This is the email notification for Java installation 
 
-    Java installation completed."""
+    Java Status:""" + msg
 
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
