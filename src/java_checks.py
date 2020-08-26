@@ -1,7 +1,8 @@
-import os
 import platform
 import subprocess
 import smtplib, ssl
+import os
+import getpass
 
 def check_system_os():
     """
@@ -73,11 +74,24 @@ def java_version():
         Function to check java version if aleady installed
         :return:
         java_version = Returns java version
+
         """
-    cmd_out = subprocess.run(['java', '-version'], capture_output=True).stderr.decode('utf-8')
-    java_version = cmd_out.splitlines()[0].split()[2].strip('""')
-    print(java_version)
-    return java_version
+
+
+    java_version = ""
+    print("checking java installed in Windows")
+    try:
+         cmd_out = subprocess.run(['java', '-version'], capture_output=True).stderr.decode('utf-8')
+         java_version = cmd_out.splitlines()[0].split()[2].strip('""')
+         print(java_version)
+
+    except subprocess.CalledProcessError as grepex:
+          print("Java not installed in this system")
+
+    finally:
+        return java_version
+
+
 
 def install_Java():
     """
@@ -91,6 +105,28 @@ def install_Java():
       print(cmd_out.stdout)
     except subprocess.CallProcessError as grepexc:
         print("error code", grepexc.returncode)
+
+def win_install_Java():
+    """
+    Function to install Java online from oracle link to Windows system
+    directly silent installation if Java not present
+
+            """
+    try:
+
+        cur_user = getpass.getuser()  # downloading Java for current user
+        print(cur_user)
+        out_path = "C:/Users"+"'/'"+cur_user
+        input_path = "C:/Users"+'/'+cur_user+'/Java_install.exe'
+        print("downlaoding Java 8 for windows system and installing it")
+        cmd_out_dwn = subprocess.run(['Powershell','Invoke-WebRequest https://javadl.oracle.com/webapps/download/AutoDL?xd_co_f=NGEwMGRhYjMtNjg2OS00MTQ2LWJmNTQtMmZiMGE4MWZkYTM5"&"BundleId=242987_a4634525489241b9a9e1aa73d9e118e6', '-OutFile', out_path+'\Java_install.exe'])
+        print("Installing Java 8 in Windows...")
+        cmd_out_install = subprocess.run(['Powershell', 'Start-Process -Wait -FilePath '+ input_path + ' -ArgumentList "/s" -PassThru'],shell=True,capture_output=True)
+        print(cmd_out_install)
+        return cmd_out_install.returncode
+
+    except subprocess.CalledProcessError as grepexc:
+        print("Helloo exception" + grepexc)
 
 
 def update_Java(version):
